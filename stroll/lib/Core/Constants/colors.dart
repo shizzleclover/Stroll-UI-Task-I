@@ -9,4 +9,6 @@ class AppColors {
   static const textSecondary = Color(0xCCFFFFFF);
   static const borderColor = Color(0x33FFFFFF);
   static const selectedBorderColor = Color(0xFF9C27B0);
+
+  static const bottomnavbar = Color.fromARGB(15, 17, 21, 1);
 }
