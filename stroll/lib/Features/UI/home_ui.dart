@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Widgets/home_body.dart';
 
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HomeBody()
+           HomeBody()
           ],
         ),
       ),
