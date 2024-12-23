@@ -75,7 +75,7 @@ class QuizOptionCard extends StatelessWidget {
                 optionText,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16.sp,
+                  fontSize: 10.sp,
                   fontFamily: "Proxima",
                 ),
               ),
