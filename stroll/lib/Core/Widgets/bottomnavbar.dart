@@ -1,68 +1,77 @@
 import 'package:flutter/material.dart';
-import '../Constants/colors.dart';
-import '../../../../core/constants/dimensions.dart';
 
-class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+class CustomBottomNavBar extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onItemSelected;
+
+  const CustomBottomNavBar({
+    Key? key,
+    required this.selectedIndex,
+    required this.onItemSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppDimensions.bottomNavHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.padding),
+      height: 80,
       decoration: BoxDecoration(
-        color: AppColors.background.withOpacity(0.8),
+        color: Colors.black,
         border: Border(
-          top: BorderSide(color: AppColors.borderColor),
+          top: BorderSide(
+            color: Colors.grey.withOpacity(0.2),
+            width: 0.5,
+          ),
         ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.view_agenda),
-          _buildNavItemWithBadge(Icons.favorite_border, '2'),
-          _buildNavItemWithBadge(Icons.chat_bubble_outline, '3'),
-          _buildNavItem(Icons.person_outline),
+          _buildNavItem(0, Icons.style, selectedIndex == 0),
+          _buildNavItem(1, Icons.water_drop, selectedIndex == 1),
+          Stack(
+            children: [
+              _buildNavItem(2, Icons.chat_bubble_outline, selectedIndex == 2),
+              Positioned(
+                right: 0,
+                top: 15,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.purple,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Text(
+                    '10',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          _buildNavItem(3, Icons.person_outline, selectedIndex == 3),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon) {
-    return Icon(
-      icon,
-      color: AppColors.textPrimary,
-    );
-  }
-
-  Widget _buildNavItemWithBadge(IconData icon, String count) {
-    return Stack(
-      children: [
-        Icon(icon, color: AppColors.textPrimary),
-        Positioned(
-          right: 0,
-          top: 0,
-          child: Container(
-            padding: const EdgeInsets.all(2),
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
-            ),
-            constraints: const BoxConstraints(
-              minWidth: AppDimensions.badgeSize,
-              minHeight: AppDimensions.badgeSize,
-            ),
-            child: Text(
-              count,
-              style: const TextStyle(
-                fontSize: 10,
-                color: AppColors.textPrimary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+  Widget _buildNavItem(int index, IconData icon, bool isSelected) {
+    return InkWell(
+      onTap: () => onItemSelected(index),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Icon(
+          icon,
+          size: 28,
+          color: isSelected ? Colors.purple : Colors.grey,
         ),
-      ],
+      ),
     );
   }
 }
+
+// Example usage in your HomeScreen:
+ 
