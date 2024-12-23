@@ -1,6 +1,6 @@
 import 'router.dart';
 import 'package:flutter/material.dart';
-import '../../Features/UI/home_ui.dart';
+import '../../Features/Home/UI/home_ui.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

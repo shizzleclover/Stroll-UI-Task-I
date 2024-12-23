@@ -13,5 +13,6 @@ class AppColors {
   static const bottomnavbar = Color.fromARGB(15, 17, 21, 1);
   static const pfp = Color.fromARGB( 18, 21, 24, 0);
   static const txtCol = Color.fromARGB( 204, 200, 255, 1);
+  static const pollCol = Color.fromARGB(35, 42, 46, 1);
  
 }
