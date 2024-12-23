@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stroll/Core/Constants/colors.dart';
 import 'package:stroll/Core/Widgets/bottomnavbar.dart';
-import '../Widgets/home_header.dart';
-import '../Widgets/home_footer.dart';
+import 'package:stroll/Features/Widgets/home_button.dart';
+import 'package:stroll/Features/Widgets/home_header.dart';
+ 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,11 +15,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  int? _selectedQuizOption;
+
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -26,98 +27,136 @@ class _HomeScreenState extends State<HomeScreen> {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                // Main content
                 const HomeBody(),
                 
-                // Bottom half image
+                // Background Image
                 Positioned(
-                  bottom: -100,
+                  bottom: -100.h,
                   left: 0,
                   right: 0,
                   child: Container(
-                    height: screenHeight * 0.5, // Takes up bottom half of screen
-                    width: screenWidth,
+                    height: 0.5.sh,
+                    width: 1.sw,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('lib/Core/Assets/Images/fade.png'), // Replace with your image
+                        image: AssetImage('lib/Core/Assets/Images/fade.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
                 
-                // Profile picture with circular container
+                // Profile Picture
                 Positioned(
-                  top: 300,
-                  left: 20,
+                  top: 300.h,
+                  left: 20.w,
                   child: Container(
-                    height: 90,
-                    width: 90,
+                    height: 90.h,
+                    width: 90.w,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: BorderRadius.circular(45.r),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Image(
+                        height: 90.h,
+                        width: 90.w,
+                        child: const Image(
                           image: AssetImage('lib/Core/Assets/Images/pfp.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                   ),
                 ),
 
-                // Name container
+                // Name Container
                 Positioned(
-                  top: 310,
-                  left: 85,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Angelina, 28',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "proxima",
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Question text
-                Positioned(
-                  top: 350,
-                  left: 110,
-                  child: Column(
-                    children: [
-                      Text(
-                        'What is your favourite Time\n of the day?',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  top: 310.h,
+                  left: 85.w,
+                  child: Container(
+                    height: 30.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(15.r)
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Angelina, 28',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Proxima",
                           color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: "Proxima"
+                          fontSize: 12.sp,
                         ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Question Text
+                Positioned(
+                  top: 350.h,
+                  left: 110.w,
+                  child: Text(
+                    'What is your favourite Time\n of the day?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontFamily: "Proxima",
+                      height: 1.2,
+                    ),
+                  ),
+                ),
+
+                // Quiz Options
+                Positioned(
+                  top: 420.h,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QuizOptionCard(
+                            optionText: 'Morning',
+                            optionLabel: 'A',
+                            isSelected: _selectedQuizOption == 0,
+                            onTap: () => setState(() => _selectedQuizOption = 0),
+                          ),
+                          QuizOptionCard(
+                            optionText: 'Afternoon',
+                            optionLabel: 'B',
+                            isSelected: _selectedQuizOption == 1,
+                            onTap: () => setState(() => _selectedQuizOption = 1),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QuizOptionCard(
+                            optionText: 'Evening',
+                            optionLabel: 'C',
+                            isSelected: _selectedQuizOption == 2,
+                            onTap: () => setState(() => _selectedQuizOption = 2),
+                          ),
+                          QuizOptionCard(
+                            optionText: 'Night',
+                            optionLabel: 'D',
+                            isSelected: _selectedQuizOption == 3,
+                            onTap: () => setState(() => _selectedQuizOption = 3),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-
-                // You can add more widgets here positioned over the bottom image
               ],
             ),
           ],
@@ -125,11 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
-        onItemSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onItemSelected: (index) => setState(() => _selectedIndex = index),
       ),
     );
   }
